@@ -1,0 +1,80 @@
+{% extends "./base.html" %}
+{% load bootstrap4 %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="float-left">
+                <h3>
+                    {% if 'delete' in request.path %}
+                        刪除
+                    {% else %}
+                        詳細
+                    {% endif %}
+                </h3>
+            </div>
+            <div class="float-right">
+                {% url 'list' as list %}
+                {% bootstrap_button '回列表' button_type='link' href=list button_class='btn-primary' %}
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <p>姓名</p>
+            </div>
+            <div class="col-9">
+                <p>{{ linkman.name }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <p>性別</p>
+            </div>
+            <div class="col-9">
+                <p>{{ linkman.get_sex_display }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <p>電話</p>
+            </div>
+            <div class="col-9">
+                <p>{{ linkman.tel }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <p>電子郵件</p>
+            </div>
+            <div class="col-9">
+                <p>{{ linkman.email }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <p>建立日</p>
+            </div>
+            <div class="col-9">
+                <p>{{ linkman.created_at|date:'Y/m/d G:i:s' }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <p>更新日</p>
+            </div>
+            <div class="col-9">
+                <p>{{ linkman.updated_at|date:'Y/m/d G:i:s' }}</p>
+            </div>
+        </div>
+        {% if 'delete' in request.path %}
+            <form method="post" id="myform">
+                {% csrf_token %}
+                {% bootstrap_button '刪除' button_type='submit' button_class='btn-danger' %}
+            </form>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}
